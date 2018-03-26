@@ -52,13 +52,16 @@ public class Database {
             System.out.println(e.getMessage());
         }
     }
-        public void insertEmployee(String empID,String name,double salary){
-        String sq1="INSERT INTO employees(empID,name,salary) VALUES(?,?,?)";
+        public void insertEmployee(String empID,String name,double salary,String username,String password,int position){
+        String sq1="INSERT INTO employees(empID,name,salary,username,password,position) VALUES(?,?,?,?,?,?)";
         try (Connection conn = this.connect();
             PreparedStatement pstmt = conn.prepareStatement(sq1)) {
             pstmt.setString(1, empID);
             pstmt.setString(2, name);
             pstmt.setFloat(3, (float)salary);
+            pstmt.setString(4, username);
+            pstmt.setString(5, password);
+            pstmt.setInt(6, position);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
