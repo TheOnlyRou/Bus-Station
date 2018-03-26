@@ -44,7 +44,7 @@ public class BusStation {
     
     public static void createTableEmployees(){
        String url="jdbc:sqlite:C:/Users/user/AppData/Local/BusStation.db";
-       String sq1="CREATE TABLE IF NOT EXISTS employees(\n" + "empID text PRIMARY KEY NOT NULL,\n" + "name text,\n"+ "salary real\n" + ");";
+       String sq1="CREATE TABLE IF NOT EXISTS employees(\n" + "empID text PRIMARY KEY NOT NULL,\n" + "name text,\n"+ "salary real\n" +"username text" + "password text"+ "position int"+ ");";
         try (Connection conn = DriverManager.getConnection(url);
                 Statement stmt = conn.createStatement()) {
             // create a new table
