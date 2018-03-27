@@ -14,7 +14,7 @@ import java.sql.*;
 public class Database {
     
     private Connection connect(){
-        String ur1="jdbc:sqlite:C:/Users/user/AppData/Local/BusStation.db";
+        String ur1="jdbc:sqlite:src/BusStation.db";
         Connection conn=null;
         try{
             conn=DriverManager.getConnection(ur1);
@@ -52,27 +52,29 @@ public class Database {
             System.out.println(e.getMessage());
         }
     }
-        public void insertEmployee(String empID,String name,double salary){
-        String sq1="INSERT INTO employees(empID,name,salary) VALUES(?,?,?)";
+        public void insertEmployee(String name,double salary, int type,String username, String password){
+        String sq1="INSERT INTO employees(name,salary,type,username,password) VALUES(?,?,?,?,?)";
         try (Connection conn = this.connect();
             PreparedStatement pstmt = conn.prepareStatement(sq1)) {
-            pstmt.setString(1, empID);
             pstmt.setString(2, name);
             pstmt.setFloat(3, (float)salary);
+            pstmt.setInt(4, type);
+            pstmt.setString(5, username);
+            pstmt.setString(6, password);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
         }
         
-    public void insertTrip(String tripID,String date,String driver, String state, double price ){
-        String sq1="INSERT INTO trips(tripID,date,driver,state,price) VALUES(?,?,?,?,?)";
+    public void insertTrip(String date,String driver, String Destination, double price ){
+        String tripID;
+        String sq1="INSERT INTO trips(date,driver,Destination,price) VALUES(?,?,?,?)";
         try (Connection conn = this.connect();
                 PreparedStatement pstmt = conn.prepareStatement(sq1)) {
-            pstmt.setString(1, tripID);
             pstmt.setString(2, date);
             pstmt.setString(3, driver);
-            pstmt.setString(4, state);
+            pstmt.setString(4, Destination);
             pstmt.setFloat(5, (float)price);
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -96,7 +98,7 @@ public class Database {
         }
     }
     public void selectEmployees(){
-        String sql = "SELECT empID, name, salary FROM employees";
+        String sql = "SELECT empID, name, salary, type FROM employees";
         
         try (Connection conn = this.connect();
 
@@ -104,8 +106,9 @@ public class Database {
              ResultSet rs    = stmt.executeQuery(sql)){
            
             while (rs.next()) {
-                System.out.println(rs.getString("empID") +  "\t" + 
+                System.out.println(rs.getInt("empID") +  "\t" + 
                                    rs.getString("name") + "\t" +
+                                   rs.getInt("type") + "\t" +
                                    rs.getDouble("salary"));
             }
         } catch (SQLException e) {
@@ -113,7 +116,7 @@ public class Database {
         }
     }
     public void selecttrips(){
-        String sql = "SELECT tripID, date, driver, state, price FROM trips";
+        String sql = "SELECT tripID, date, driver, Destination, price FROM trips";
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
@@ -121,10 +124,10 @@ public class Database {
 
             // loop through the result set
             while (rs.next()) {
-                System.out.println(rs.getString("tripID") +  "\t" + 
+                System.out.println(rs.getInt("tripID") +  "\t" + 
                                    rs.getString("date") +  "\t" + 
                                    rs.getString("driver") +  "\t" + 
-                                   rs.getString("state") + "\t" +
+                                   rs.getString("Destination") + "\t" +
                                    rs.getDouble("price"));
 
             }
@@ -162,9 +165,6 @@ public class Database {
                 if(rs.getString("username").equals(username1) && rs.getString("password").equals(password1)){
                     return 1;
                 }
-                else{
-                    continue;
-                }
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -175,7 +175,7 @@ public class Database {
     
     public int searchEmployees(String username, String password, int type)
     {
-        String sql = "SELECT username, password FROM employees";
+        String sql = "SELECT username, password, type FROM employees";
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
              ResultSet rs    = stmt.executeQuery(sql)){
@@ -183,13 +183,13 @@ public class Database {
             // loop through the result set
             while (rs.next()) {
                 if(type == 1)
-                {                 if(rs.getString("username").equals(username) && rs.getString("password").equals(password))
+                {                 if(rs.getString("username").equals(username) && rs.getString("password").equals(password) && rs.getInt("type")==1)
                                    {
                                        return 1;
                                    }
                 }
                 else if(type == 2)
-                {                 if(rs.getString("username").equals(username) && rs.getString("password").equals(password))
+                {                 if(rs.getString("username").equals(username) && rs.getString("password").equals(password) && rs.getInt("type")==2)
                                    {
                                        return 2;
                                    }                    

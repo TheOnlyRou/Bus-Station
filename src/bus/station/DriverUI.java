@@ -6,7 +6,10 @@
 package bus.station;
 
 import java.awt.Color;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.ImageIcon;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -20,7 +23,7 @@ public class DriverUI extends javax.swing.JFrame {
     public DriverUI() {
         initComponents();
         this.getContentPane().setBackground(new Color(192,0,0));
-        setIconImage(new ImageIcon(getClass().getResource("logo.jpg")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("logo.jpg")).getImage());   
     }
 
     /**
@@ -31,7 +34,15 @@ public class DriverUI extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
+        entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("BusStation.dbPU").createEntityManager();
+        tripsQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT t FROM Trips t");
+        tripsList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : tripsQuery.getResultList();
+        tripsQuery1 = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT t FROM Trips t");
+        tripsList1 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : tripsQuery1.getResultList();
+        tripsQuery2 = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT t FROM Trips t");
+        tripsList2 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : tripsQuery2.getResultList();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -51,18 +62,23 @@ public class DriverUI extends javax.swing.JFrame {
         getContentPane().add(jLabel1);
         jLabel1.setBounds(40, 90, 289, 17);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
         jTable1.getTableHeader().setResizingAllowed(false);
+
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tripsList2, jTable1);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tripID}"));
+        columnBinding.setColumnName("Trip ID");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${date}"));
+        columnBinding.setColumnName("Date");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${destination}"));
+        columnBinding.setColumnName("Destination");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${driver}"));
+        columnBinding.setColumnName("Driver");
+        columnBinding.setColumnClass(String.class);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1);
@@ -77,6 +93,8 @@ public class DriverUI extends javax.swing.JFrame {
         getContentPane().add(jLabel2);
         jLabel2.setBounds(-5, 0, 510, 400);
 
+        bindingGroup.bind();
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -87,10 +105,18 @@ public class DriverUI extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.persistence.EntityManager entityManager;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private java.util.List<bus.station.Trips> tripsList;
+    private java.util.List<bus.station.Trips> tripsList1;
+    private java.util.List<bus.station.Trips> tripsList2;
+    private javax.persistence.Query tripsQuery;
+    private javax.persistence.Query tripsQuery1;
+    private javax.persistence.Query tripsQuery2;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

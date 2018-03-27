@@ -6,9 +6,6 @@
 package bus.station;
 
 import java.awt.Color;
-import java.awt.event.FocusListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 
 /**
@@ -87,15 +84,16 @@ public class Login extends javax.swing.JFrame {
         getContentPane().add(jTextField3);
         jTextField3.setBounds(54, 189, 300, 40);
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Password show.png"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Password.png"))); // NOI18N
         jLabel4.setText("jLabel4");
+        jLabel4.setPreferredSize(new java.awt.Dimension(50, 40));
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel4MouseClicked(evt);
             }
         });
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(300, 243, 50, 35);
+        jLabel4.setBounds(304, 240, 50, 40);
 
         jPasswordField1.setText("Password");
         jPasswordField1.setAutoscrolls(false);
@@ -193,26 +191,13 @@ public class Login extends javax.swing.JFrame {
             jTextField3.setText("Username");
     }//GEN-LAST:event_jTextField3FocusLost
 
-    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-        
-        if(flag==1)
-        {
-            jPasswordField1.setEchoChar('*');
-            flag=0;
-        }
-        else
-        {
-            jPasswordField1.setEchoChar((char)0);
-            flag=1;
-        }
-    }//GEN-LAST:event_jLabel4MouseClicked
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int test;
         Database d = new Database();
         ManagerUI mui = new ManagerUI(); 
         DriverUI dui = new DriverUI();
         CustomerUI cui = new CustomerUI();
+        String driver;
         
         String username;
         String password;
@@ -272,6 +257,20 @@ public class Login extends javax.swing.JFrame {
         this.setVisible(false);
         signup.run();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+
+        if(flag==1)
+        {
+            jPasswordField1.setEchoChar('*');
+            flag=0;
+        }
+        else
+        {
+            jPasswordField1.setEchoChar((char)0);
+            flag=1;
+        }
+    }//GEN-LAST:event_jLabel4MouseClicked
 
 
     public void run() {

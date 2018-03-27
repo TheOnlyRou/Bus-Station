@@ -19,9 +19,9 @@ public class CustomerUI extends javax.swing.JFrame {
      */
     public CustomerUI() {
         initComponents();
-        this.getContentPane().setBackground(new Color(192,0,0));
         setIconImage(new ImageIcon(getClass().getResource("logo.jpg")).getImage());
-        jButton3.setEnabled(false);
+        this.getContentPane().setBackground(new Color(192,0,0));
+        
     }
 
     /**
@@ -32,18 +32,24 @@ public class CustomerUI extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
+        entityManager = java.beans.Beans.isDesignTime() ? null : javax.persistence.Persistence.createEntityManagerFactory("BusStation.dbPU").createEntityManager();
+        tripsQuery = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT t FROM Trips t");
+        tripsList = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : tripsQuery.getResultList();
+        tripsQuery1 = java.beans.Beans.isDesignTime() ? null : entityManager.createQuery("SELECT t FROM Trips t");
+        tripsList1 = java.beans.Beans.isDesignTime() ? java.util.Collections.emptyList() : tripsQuery1.getResultList();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jButton3 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("REACH IT Bus Station");
         setLocation(new java.awt.Point(500, 250));
-        setPreferredSize(new java.awt.Dimension(500, 400));
+        setMinimumSize(new java.awt.Dimension(510, 420));
+        setSize(new java.awt.Dimension(510, 400));
         getContentPane().setLayout(null);
 
         jLabel1.setFont(new java.awt.Font("Open Sans Light", 1, 12)); // NOI18N
@@ -56,35 +62,43 @@ public class CustomerUI extends javax.swing.JFrame {
         getContentPane().add(jLabel3);
         jLabel3.setBounds(330, 0, 150, 90);
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jTable1.getTableHeader().setResizingAllowed(false);
+        jButton3.setText("Schedule");
+        getContentPane().add(jButton3);
+        jButton3.setBounds(360, 330, 104, 23);
+
+        org.jdesktop.swingbinding.JTableBinding jTableBinding = org.jdesktop.swingbinding.SwingBindings.createJTableBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, tripsList1, jTable1);
+        org.jdesktop.swingbinding.JTableBinding.ColumnBinding columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${tripID}"));
+        columnBinding.setColumnName("Trip ID");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${destination}"));
+        columnBinding.setColumnName("Destination");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${date}"));
+        columnBinding.setColumnName("Date");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${driver}"));
+        columnBinding.setColumnName("Driver");
+        columnBinding.setColumnClass(String.class);
+        columnBinding = jTableBinding.addColumnBinding(org.jdesktop.beansbinding.ELProperty.create("${price}"));
+        columnBinding.setColumnName("Price");
+        columnBinding.setColumnClass(Double.class);
+        bindingGroup.addBinding(jTableBinding);
+        jTableBinding.bind();
+
         jScrollPane1.setViewportView(jTable1);
 
         getContentPane().add(jScrollPane1);
-        jScrollPane1.setBounds(33, 109, 425, 185);
-
-        jButton3.setText("Schedule");
-        getContentPane().add(jButton3);
-        jButton3.setBounds(354, 312, 104, 23);
+        jScrollPane1.setBounds(30, 100, 430, 220);
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Customer.png"))); // NOI18N
         jLabel2.setText("jLabel2");
         getContentPane().add(jLabel2);
         jLabel2.setBounds(-6, 0, 510, 400);
 
+        bindingGroup.bind();
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
 
 
             public void run() {
@@ -93,11 +107,17 @@ public class CustomerUI extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.persistence.EntityManager entityManager;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private java.util.List<bus.station.Trips> tripsList;
+    private java.util.List<bus.station.Trips> tripsList1;
+    private javax.persistence.Query tripsQuery;
+    private javax.persistence.Query tripsQuery1;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }
