@@ -148,6 +148,7 @@ public class Database {
                 System.out.println(rs.getString("vehID") +  "\t" + 
                                    rs.getString("model") + "\t" +
                                    rs.getString("type") + "\t" +
+
                                    rs.getInt("multiplier"));
             }
         } catch (SQLException e) {
@@ -199,6 +200,21 @@ public class Database {
             System.out.println(e.getMessage());
         }
         return -1;
+    }
+    public int numberOfManagers(){
+        String sql="SELECT type FROM employees WHERE type = 1";
+        int c=0;
+        try (Connection conn = this.connect();
+             PreparedStatement pstmt  = conn.prepareStatement(sql)){
+            ResultSet rs=pstmt.executeQuery();
+            while(rs.next()){
+                c++;
+            }
+        }
+        catch(SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return c;
     }
     
 }
